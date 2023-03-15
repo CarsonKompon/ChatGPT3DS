@@ -1,0 +1,68 @@
+## --- Metadata Options --- ##
+
+# [string] @name        : Name of the game, default: name of the directory.
+# [string] @author      : Author of the game.
+# [string] @description : Description of the game.
+# [string] @version     : Version of the game in {major}.{minor}.{revision} format.
+[metadata]
+name = "ChatGPT3DS"
+author = "Carson Kompon"
+description = "Make calls to OpenAI's API from your Nintendo 3DS"
+version = "1.0.0"
+
+## --- Build Options --- ##
+
+# [bool]   @clean         : Clean the build artifacts and directory before a new build.
+#                           This helps reduce chances of cluttering the built data.
+#                           Default: false.
+#
+# [array]  @targts        : Target console(s) to build for. Default: ["3ds", "switch"].
+#
+# [string] @source        : Game source directory; relative to the config
+#                           file. Default: "game".
+#
+# [string] @icon          : Icon name. Do not provide the extension.
+#                           lovebrew will automatically provide this.
+#                           It can include a prepended path. This is relative
+#                           to the config file. Default: "icon".
+#
+# [string] @searchPath : Location to search for the elf binaries.
+#                           Default: ""
+[build]
+clean = false
+targets = ["3ds"]
+source = "ChatGPT3DS"
+icon = "icon"
+searchPath = ""
+
+## --- Output Options --- ##
+
+# [string] @buildDir  : Output directory for compilation; relative to the config
+#                       file. When false, it will use current directory.
+#                       Default: "build".
+#
+# [bool]   @noBinary  : Whether or not to properly build a project binary.
+#                       This will not build a 3dsx application. See @build.targets.
+#                       When false, outputs as a 3dsx; when true, output only
+#                       as the game folder used for testing purposes.
+#                       Default: false.
+#
+# [string] @gameDir   : The directory within the build directory which gets
+#                       zipped and appended to the resulting binary. Default: "game".
+#                       NOTE: if "rawData" is true, this does not get zipped and can
+#                       be used for quick testing. However, the directory must be named
+#                       as the default, "game".
+[output]
+buildDir = "build"
+noBinary = false
+gameDir = "ChatGPT3DS"
+
+## --- Debug Options --- ##
+
+# [bool]   @logging       : Whether or not to enable logging. Useful to see what the
+#                           application is doing, should it not be working correctly.
+[debug]
+logging = true
+# DO NOT MODIFY #
+version = "0.6.0"
+# ------------- #
