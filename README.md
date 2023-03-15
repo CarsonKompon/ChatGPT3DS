@@ -6,7 +6,7 @@ A 3DS Application that allows you to make calls to OpenAI's gpt-3.5-turbo API an
 
 1. Download the latest release from the [releases page](https://github.com/CarsonKompon/ChatGPT3DS/releases)
 2. Place `ChatGPT3DS.3dsx` in the `/3ds/` folder on your SD card
-3. ** *Optional* ** Create the file `/3ds/save/api_key.txt` and place your OpenAI API key in it. If you do not do this, you will have to enter your API key on your 3DS the first time you run the application.
+3. ** *Optional* ** Create the file `/3ds/save/api_key.txt` and place your [OpenAI API key](https://platform.openai.com/account/api-keys) in it. If you do not do this, you will have to enter your API key on your 3DS the first time you run the application.
 
 *WARNING: This app has only been tested on a New Nintendo 3DS model. Make an issue if you have any problems on your own device :)*
 
