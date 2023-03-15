@@ -10,6 +10,10 @@ A 3DS Application that allows you to make calls to OpenAI's gpt-3.5-turbo API an
 
 *WARNING: This app has only been tested on a New Nintendo 3DS model. Make an issue if you have any problems on your own device :)*
 
+## Demonstration
+
+https://youtube.com/watch?v=gh5tZnisXlI
+
 ## Attribution
 
 - [videah](https://github.com/videah) for creating the original LovePotion
