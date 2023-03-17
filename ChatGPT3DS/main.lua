@@ -41,6 +41,7 @@ if not HAS_IMAGE_GEN then
 end
 
 local settingsItems = {
+    { "Chat Model", function() SetChatModel(-1) end, function() SetChatModel(1) end, function() return OpenAI.chatModel end},
     { "Temperature", function() SetTemperature(-0.1) end, function() SetTemperature(0.1) end, function() return OpenAI.temperature end},
     { "Top P", function() SetTopP(-0.05) end, function() SetTopP(0.05) end, function() return OpenAI.top_p end},
     { "Presence Penalty", function() SetPresence(-0.1) end, function() SetPresence(0.1) end, function() return OpenAI.presence_penalty end},
@@ -49,6 +50,9 @@ local settingsItems = {
     { "Back", function() MainMenu() end}
 }
 local menuSelection = 1
+
+local chatModel = 1
+local CHAT_MODELS = {"gpt-3.5-turbo", "gpt-4"}
 
 local keyboardTrigger = false
 
@@ -144,7 +148,12 @@ function draw_menu(items, scale, menuY)
         local menuItem = items[i]
         local menuItemText = menuItem[1]
         if #menuItem == 4 then
-            menuItemText = menuItemText .. ": " .. string.format("%.2f", menuItem[4]())
+            local text = menuItem[4]()
+            if type(text) == "string" then
+                menuItemText = menuItemText .. ": " .. text
+            else
+                menuItemText = menuItemText .. ": " .. string.format("%.2f", text)
+            end
         end
         local menuItemColor = {0, 0, 0, 255}
         if i == menuSelection then
@@ -342,6 +351,13 @@ end
 function Settings()
     STATE = "settings"
     menuSelection = 1
+end
+
+function SetChatModel(model)
+    chatModel = chatModel + model
+    if chatModel < 1 then chatModel = 1 end
+    if chatModel > #CHAT_MODELS then chatModel = #CHAT_MODELS end
+    OpenAI.chatModel = CHAT_MODELS[chatModel]
 end
 
 function SetTemperature(temperature)

@@ -6,6 +6,7 @@ OpenAI.API_KEY = ""
 OpenAI.API_URL = "https://api.openai.com/v1/"
 
 -- Chat Completion Settings
+OpenAI.chatModel = "gpt-3.5-turbo"
 OpenAI.temperature = 1.0
 OpenAI.top_p = 1.0
 OpenAI.presence_penalty = 0.0
@@ -28,7 +29,7 @@ function OpenAI.ChatMessageTableToString(messages)
 end
 
 function OpenAI.ChatCompletion(messages, model)
-    model = model or "gpt-3.5-turbo"
+    model = model or OpenAI.chatModel
     OpenAI.call = string.format(
         [[{
         "model": "%s",
