@@ -8,7 +8,7 @@
 name = "ChatGPT3DS"
 author = "Carson Kompon"
 description = "Make calls to OpenAI's API from your Nintendo 3DS"
-version = "1.1.0"
+version = "1.1.1"
 
 ## --- Build Options --- ##
 

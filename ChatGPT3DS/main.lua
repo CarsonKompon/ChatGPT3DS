@@ -28,6 +28,7 @@ local lastQuestion = ""
 local questionResponse = ""
 local lastMessages = {}
 local lastImage = nil
+local estimatedCost = ""
 
 local menuItems = {
     { "Ask Question", function() AskQuestion() end },
@@ -53,6 +54,7 @@ local menuSelection = 1
 
 local chatModel = 1
 local CHAT_MODELS = {"gpt-3.5-turbo", "gpt-4"}
+local CHAT_COSTS = {0.002, 0.03} -- Cost per 1K tokens
 
 local keyboardTrigger = false
 
@@ -138,6 +140,11 @@ function draw_bottom_screen()
             local scale = targetSize / lastImage:getWidth()
             love.graphics.draw(lastImage, (SCREEN_WIDTH-lastImage:getWidth()*scale)/2, (SCREEN_HEIGHT-lastImage:getHeight()*scale)/2, 0, scale, scale)
         end
+    end
+
+    -- Draw estimated cost
+    if estimatedCost ~= "" then
+        TextDraw.DrawTextCentered(estimatedCost, SCREEN_WIDTH/2, SCREEN_HEIGHT - 12, {0.4, 0.4, 0.4, 255}, font, 0.4)
     end
 end
 
@@ -240,6 +247,7 @@ function love.textinput(text)
             systemMessage = text
         elseif STATE == "ask" then
             lastQuestion = text
+            estimatedCost = ""
             lastMessages = {
                 { role = "system", content = systemMessage },
                 { role = "user", content = lastQuestion }
@@ -248,11 +256,14 @@ function love.textinput(text)
             j = json.parse(body)
             if type(j.choices) == "table" then
                 questionResponse = j.choices[1].message.content
+                estimatedCost = "Estimated Cost: $" .. string.format("%.6f", j.usage.total_tokens / 1000 * CHAT_COSTS[chatModel])
             else
                 questionResponse = "Error: " .. body
+                estimatedCost = ""
             end
         elseif STATE == "image" then
             lastQuestion = text
+            estimatedCost = ""
             code, body, headers = OpenAI.ImageGeneration(lastQuestion)
             questionResponse = body
             -- find the position of `"b64_json": ` in the string
@@ -288,20 +299,26 @@ function love.textinput(text)
                 end
 
                 lastImage = love.graphics.newImage(imageData)
+
+                estimatedCost = "Estimated Cost: $0.016"
             else
                 DISPLAY_STATE = "text"
                 questionResponse = "Error: " .. body
+                estimatedCost = ""
             end
         elseif STATE == "continue" then
             lastQuestion = text
+            estimatedCost = ""
             table.insert(lastMessages, { role = "assistant", content = questionResponse })
             table.insert(lastMessages, { role = "user", content = lastQuestion })
             code, body, headers = OpenAI.ChatCompletion(lastMessages)
             j = json.parse(body)
             if type(j.choices) == "table" then
                 questionResponse = j.choices[1].message.content
+                estimatedCost = "Estimated Cost: $" .. string.format("%.6f", j.usage.total_tokens / 1000 * CHAT_COSTS[chatModel])
             else
                 questionResponse = "Error: " .. body
+                estimatedCost = ""
             end
         end
     end
