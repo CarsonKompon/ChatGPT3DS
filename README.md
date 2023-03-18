@@ -1,6 +1,6 @@
 # ChatGPT3DS
 
-A 3DS Application that allows you to make calls to OpenAI's gpt-3.5-turbo API and image generation API.
+A 3DS Application that allows you to make calls to OpenAI's chat completion API and image generation API.
 
 ## Installation
 
